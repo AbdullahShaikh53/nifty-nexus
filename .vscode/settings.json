@@ -1,0 +1,1 @@
+{ "task.allowAutomaticTasks": "on", "java.configuration.updateBuildConfiguration": "automatic", "files.exclude": { "**/node_modules": true, "**/target": true } }

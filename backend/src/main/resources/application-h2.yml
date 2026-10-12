@@ -1,0 +1,14 @@
+# Zero-setup profile: embedded H2 running in MySQL compatibility mode, file-backed in ./data.
+# Use for click-to-run demos. Production/college demo should use the MySQL profile (docker compose).
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/niftynexus;MODE=MySQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  flyway:
+    locations: classpath:db/migration

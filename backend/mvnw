@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Lightweight Maven wrapper: uses a local 'mvn' if present, otherwise downloads
+# Apache Maven 3.9.9 once into ~/.m2/wrapper and runs it. Requires JDK 17+.
+set -e
+if ! command -v java >/dev/null 2>&1; then echo "JDK 17+ is required (java not found). Install from https://adoptium.net"; exit 1; fi
+if command -v mvn >/dev/null 2>&1; then exec mvn "$@"; fi
+VER=3.9.9
+DIR="$HOME/.m2/wrapper/apache-maven-$VER"
+if [ ! -x "$DIR/bin/mvn" ]; then
+  echo "Downloading Apache Maven $VER (one time)..."
+  mkdir -p "$HOME/.m2/wrapper"
+  URL=$(sed -n 's/^distributionUrl=//p' "$(dirname "$0")/.mvn/wrapper/maven-wrapper.properties")
+  curl -fsSL "$URL" -o "$HOME/.m2/wrapper/maven.zip"
+  (cd "$HOME/.m2/wrapper" && unzip -q -o maven.zip && rm maven.zip)
+fi
+exec "$DIR/bin/mvn" "$@"

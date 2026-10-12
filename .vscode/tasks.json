@@ -1,0 +1,60 @@
+{
+  "version": "2.0.0",
+  "windows": { "options": { "shell": { "executable": "cmd.exe", "args": ["/d", "/c"] } } },
+  "tasks": [
+    {
+      "label": "▶ Run Nifty Nexus (click to run)",
+      "dependsOn": ["Backend: Spring Boot (H2 zero-setup)", "Frontend: Vite dev server"],
+      "dependsOrder": "parallel",
+      "problemMatcher": [],
+      "group": { "kind": "build", "isDefault": true },
+      "runOptions": { "runOn": "folderOpen" }
+    },
+    {
+      "label": "Backend: Spring Boot (H2 zero-setup)",
+      "type": "shell",
+      "command": "./mvnw spring-boot:run -Dspring-boot.run.profiles=h2",
+      "windows": { "command": "mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=h2" },
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "isBackground": true,
+      "presentation": { "panel": "dedicated", "group": "nexus" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Backend: Spring Boot (MySQL via Docker)",
+      "type": "shell",
+      "command": "docker compose up -d mysql && cd backend && ./mvnw spring-boot:run",
+      "windows": { "command": "docker compose up -d mysql && cd backend && mvnw.cmd spring-boot:run" },
+      "options": { "cwd": "${workspaceFolder}" },
+      "isBackground": true,
+      "presentation": { "panel": "dedicated", "group": "nexus" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Frontend: Vite dev server",
+      "type": "shell",
+      "command": "npm install && npm run dev -- --open",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "isBackground": true,
+      "presentation": { "panel": "dedicated", "group": "nexus" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Backend: run tests",
+      "type": "shell",
+      "command": "./mvnw test",
+      "windows": { "command": "mvnw.cmd test" },
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Frontend: run tests",
+      "type": "shell",
+      "command": "npm test",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "group": "test",
+      "problemMatcher": []
+    }
+  ]
+}

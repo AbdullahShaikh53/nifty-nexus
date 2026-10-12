@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: nifty-nexus
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/niftynexus?useSSL=false&serverTimezone=Asia/Kolkata&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true}
+    username: ${MYSQL_USER:nexus}
+    password: ${MYSQL_PASSWORD:nexuspass}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+    properties:
+      hibernate.jdbc.time_zone: Asia/Kolkata
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jackson:
+    time-zone: Asia/Kolkata
+server:
+  port: 8080
+  error:
+    include-message: always
+
+nexus:
+  jwt-secret: ${JWT_SECRET:dev-only-secret-please-change-this-to-48-plus-random-characters-000}
+  jwt-expiry-hours: 12
+  cookie-secure: false
+  cors-origins: http://localhost:5173
+  feed-mode: ${FEED_MODE:mock}          # mock | angelone
+  simulate-open: ${MARKET_SIMULATE_OPEN:true}   # practice mode: market always open
+  slippage-percent: 0.05
+  default-wallet: 1000000
+  angelone:
+    api-key: ${ANGELONE_API_KEY:}
+    client-id: ${ANGELONE_CLIENT_ID:}
+    pin: ${ANGELONE_PIN:}
+    totp-secret: ${ANGELONE_TOTP_SECRET:}
+  coach:
+    llm-enabled: ${COACH_LLM_ENABLED:false}
+    llm-api-key: ${COACH_LLM_API_KEY:}
+
+logging:
+  level:
+    com.niftynexus: INFO

@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Debug Backend (H2)",
+      "request": "launch",
+      "mainClass": "com.niftynexus.NiftyNexusApplication",
+      "projectName": "nifty-nexus-backend",
+      "args": "--spring.profiles.active=h2"
+    },
+    {
+      "type": "chrome",
+      "name": "Open Frontend in Chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/frontend"
+    }
+  ],
+  "compounds": [
+    { "name": "Nifty Nexus: Debug Backend + Frontend", "configurations": ["Debug Backend (H2)", "Open Frontend in Chrome"], "preLaunchTask": "Frontend: Vite dev server" }
+  ]
+}

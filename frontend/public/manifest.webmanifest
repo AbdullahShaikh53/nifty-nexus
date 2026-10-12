@@ -1,0 +1,9 @@
+{
+  "name": "Nifty Nexus by Abdullah Shaikh",
+  "short_name": "Nifty Nexus",
+  "start_url": "/app",
+  "display": "standalone",
+  "background_color": "#06080d",
+  "theme_color": "#06080d",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

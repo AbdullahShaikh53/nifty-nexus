@@ -1,0 +1,19 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: niftynexus-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-niftynexus}
+      MYSQL_USER: ${MYSQL_USER:-nexus}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-nexuspass}
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports: ["3306:3306"]
+    volumes: ["mysql_data:/var/lib/mysql"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 10
+volumes:
+  mysql_data:
